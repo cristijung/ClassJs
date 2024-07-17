@@ -1,0 +1,16 @@
+#usuarios {
+    margin-top: 20px;
+}
+.usuario {
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.botao-editar, .botao-deletar {
+    margin-right: 10px;
+}
+
+section {
+    max-width: 80%;
+    margin: auto;
+}
