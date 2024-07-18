@@ -1,4 +1,4 @@
-// alterações feitas
+// alterações feitas....
 //ajustado o reset do form: a função reset está sendo chamada no form após a renderização dos usuários, 
 //desta forma se garante que o formulário está limpo para novas entradas.
 //ajustado o add de ouvintes do evento de forma mais adequada: se remove os ouvintes antigos antes de adicionar novos para evitar múltiplas submissões.
