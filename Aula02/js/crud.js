@@ -1,3 +1,10 @@
+// alterações feitas
+//ajustado o reset do form: a função reset está sendo chamada no form após a renderização dos usuários, 
+//desta forma se garante que o formulário está limpo para novas entradas.
+//ajustado o add de ouvintes do evento de forma mais adequada: se remove os ouvintes antigos antes de adicionar novos para evitar múltiplas submissões.
+//está ok agora
+
+
 const usuarios = [
     { id: 1, nome: "Ana Banana", email: "banana@example.com" },
     { id: 2, nome: "Pafúncio Souza", email: "souza@example.com" }
@@ -31,22 +38,29 @@ function adicionarUsuario(event) {
 
     usuarios.push({ id, nome, email });
     renderizarUsuarios();
-    this.reset();
+    document.getElementById("formUsuario").reset();
 }
 
 function editarUsuario(id) {
-    const usuario = usuarios.find(u => u.id === id);
-    if (usuario) {
+    const usuarioIndex = usuarios.findIndex(u => u.id === id);
+    if (usuarioIndex > -1) {
+        const usuario = usuarios[usuarioIndex];
         document.getElementById("nome").value = usuario.nome;
         document.getElementById("email").value = usuario.email;
-        document.getElementById("formUsuario").onsubmit = function(event) {
+
+        document.getElementById("formUsuario").removeEventListener("submit", adicionarUsuario);
+
+        const atualizarUsuario = function(event) {
             event.preventDefault();
-            usuario.nome = document.getElementById("nome").value;
-            usuario.email = document.getElementById("email").value;
+            usuarios[usuarioIndex].nome = document.getElementById("nome").value;
+            usuarios[usuarioIndex].email = document.getElementById("email").value;
             renderizarUsuarios();
-            this.reset();
-            document.getElementById("formUsuario").onsubmit = adicionarUsuario;
+            document.getElementById("formUsuario").reset();
+            document.getElementById("formUsuario").removeEventListener("submit", atualizarUsuario);
+            document.getElementById("formUsuario").addEventListener("submit", adicionarUsuario);
         };
+
+        document.getElementById("formUsuario").addEventListener("submit", atualizarUsuario);
     }
 }
 
